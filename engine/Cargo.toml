@@ -4,3 +4,25 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
+shared = { path = "../shared" }
+redis = { path = "../redis" }
+tokio = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+rust_decimal = { workspace = true }
+futures-util = { workspace = true }
+tracing = { workspace = true }
+anyhow = { workspace = true }
+thiserror = { workspace = true }
+tokio-stream = { workspace = true }
+chrono = { workspace = true }
+uuid = { workspace = true }
+
+[dev-dependencies]
+testcontainers = "0.14"
+db = { path = "../db" }
+redis = { path = "../redis" }
+shared = { path = "../shared" }
+tokio = { workspace = true, features = ["full"] }
+tokio-stream = { workspace = true }
+sqlx = { workspace = true }
