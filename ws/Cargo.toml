@@ -4,3 +4,15 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
+shared = { path = "../shared" }
+redis = { path = "../redis" }
+actix-web = { workspace = true }
+actix-web-actors = { workspace = true }
+actix = { workspace = true }
+tokio = { workspace = true }
+tokio-stream = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+futures-util = { workspace = true }
+tracing = { workspace = true }
+env_logger = { workspace = true }
