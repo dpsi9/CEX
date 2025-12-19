@@ -1,0 +1,67 @@
+version: "3.9"
+services:
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: cex
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  cex-build:
+    build: .
+    image: cex:latest
+    # dummy service to build the image once; not started by default
+    command: ["sleep", "infinity"]
+    profiles: ["build"]
+
+  api:
+    image: cex:latest
+    depends_on:
+      - redis
+    environment:
+      APP_BIN: api
+      REDIS_URL: redis://redis:6379/
+      API_BIND: 0.0.0.0:8080
+    ports:
+      - "8080:8080"
+
+  engine:
+    image: cex:latest
+    depends_on:
+      - redis
+    environment:
+      APP_BIN: engine
+      REDIS_URL: redis://redis:6379/
+
+  ws:
+    image: cex:latest
+    depends_on:
+      - redis
+    environment:
+      APP_BIN: ws
+      REDIS_URL: redis://redis:6379/
+      WS_BIND: 0.0.0.0:9000
+    ports:
+      - "9000:9000"
+
+  db_filler:
+    image: cex:latest
+    depends_on:
+      - redis
+      - postgres
+    environment:
+      APP_BIN: db_filler
+      REDIS_URL: redis://redis:6379/
+      DATABASE_URL: postgres://postgres:postgres@postgres:5432/cex
+
+volumes:
+  pgdata:

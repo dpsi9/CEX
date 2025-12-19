@@ -1,12 +1,14 @@
 [workspace]
-members = ["api", "db", "db_filler", "engine", "redis", "ws","shared"]
+members = ["api", "db", "db_filler", "engine", "redis", "ws", "shared"]
 resolver = "2"
 
 [workspace.dependencies]
 actix-web = "4"
 actix-cors = "0.7"
+actix-web-actors = "4"
+actix = "0.13"
 async-trait = "0.1"
-chrono = {version = "0.4", features = ["serde"]}
+chrono = { version = "0.4", features = ["serde"] }
 confik = "0.15"
 dotenvy = "0.15"
 env_logger = "0.11"
@@ -18,8 +20,11 @@ sqlx = { version = "0.8", features = [
     "runtime-tokio",
     "rust_decimal",
     "chrono",
+    "uuid",
+    "macros",
+    "migrate",
 ] }
-redis = { version = "0.32.7", features = ["tokio-comp", "connection-manager"] }
+redis-rs = { package = "redis", version = "0.32.7", features = ["tokio-comp", "connection-manager"] }
 fred = { version = "10.1", features = ["subscriber-client"] }
 rust_decimal = { version = "1.36", features = ["serde"] }
 rust_decimal_macros = "1.36"
@@ -27,6 +32,7 @@ uuid = { version = "1.10", features = ["v4", "serde"] }
 rand = "0.9.2"
 futures-util = "0.3"
 tokio-tungstenite = "0.28"
+tokio-stream = { version = "0.1", features = ["sync"] }
 anyhow = "1.0"
 thiserror = "2.0"
 tracing = "0.1"
